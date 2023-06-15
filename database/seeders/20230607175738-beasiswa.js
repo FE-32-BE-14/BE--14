@@ -18,6 +18,8 @@ module.exports = {
                     3. Level Platinum (Chapter 8 - 9), Level Platinum akan dijalankan sebanyak 12 Sesi dengan 3 jam per sesi dan fasilitator akan mendampingi saat pembuatan product class. Fasilitator juga menyediakan sesi diskusi melalui asynchronous teaching dan synchronous teaching. Level ini berfokus pada pengembangan skill tim project masing - masing siswa. '
                   `,
           img: 'sbd289d8d297tx67b278rdbt',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
         {
           name: 'FRONT END JAVASCRIPT COURSE',
@@ -30,6 +32,8 @@ module.exports = {
               - Level Gold (Chapter 4 - 7), Level Gold dijalankan sebanyak 24 sesi melalui forum diskusi dengan 3 jam (180 menit) per sesi. Fasilitator akan menyampaikan dengan sistem Flipped learning melalui asynchronous teaching dan synchronous teaching dan juga dibimbing oleh fasilitator via forum diskusi. Level ini berfokus pada pengembangan skill individu masing - masing siswa.    
               - Level Platinum (Chapter 8 - 9), Level Platinum akan dijalankan sebanyak 12 Sesi dengan 3 jam per sesi dan fasilitator akan mendampingi saat pembuatan product class. Fasilitator juga menyediakan sesi diskusi melalui asynchronous teaching dan synchronous teaching. Level ini berfokus pada pengembangan skill tim project masing - masing siswa.    `,
           img: 'sbd289d8d297tx67b278rdbt',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}

@@ -10,6 +10,8 @@ module.exports = {
           email: 'admin@gmail.com',
           password: '$2b$10$CQrP1q7669PRyj7Cts93SetpFnc0N8RaIEdPaFsCfANtatPGy7D6y', //admin123
           refresh_token: 'ka87dbjsdhggahj87dbd1986d62d186d1hfd17d1iq17s1',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}

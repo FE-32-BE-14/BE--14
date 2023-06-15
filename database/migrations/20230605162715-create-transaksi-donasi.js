@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
       },
       no_va: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       status: {

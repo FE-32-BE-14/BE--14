@@ -8,9 +8,11 @@ module.exports = {
       [
         {
           donasi_id: 1,
-          no_va: 12873619853176,
+          no_va: '12873619853176',
           status: 'Terbayar',
           user_id: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}

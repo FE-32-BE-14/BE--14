@@ -13,6 +13,8 @@ module.exports = {
           status_disabilitas: 'Disabilitas',
           kategori_id: 2,
           disabilitas_id: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}

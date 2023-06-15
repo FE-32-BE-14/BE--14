@@ -19,6 +19,8 @@ module.exports = {
           kabupaten: 'Bondowoso',
           kecamatan: 'Tamanan',
           desa: 'Kalianyar',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}

@@ -6,13 +6,13 @@ module.exports = {
     await queryInterface.bulkInsert(
       'Kategoris',
       [
-        { name: 'Disabilitas Fisik' },
-        { name: 'Disabilitas Intelektual' },
-        { name: 'Disabilitas Psikologis' },
-        { name: 'Disabilitas Perilaku dan Emosional' },
-        { name: 'Disabilitas Neurologis' },
-        { name: 'Disabilitas Sensorik' },
-        { name: 'Disabilitas Kronis' },
+        { name: 'Disabilitas Fisik', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Disabilitas Intelektual', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Disabilitas Psikologis', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Disabilitas Perilaku dan Emosional', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Disabilitas Neurologis', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Disabilitas Sensorik', createdAt: new Date(), updatedAt: new Date() },
+        { name: 'Disabilitas Kronis', createdAt: new Date(), updatedAt: new Date() },
       ],
       {}
     );

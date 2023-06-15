@@ -15,6 +15,8 @@ module.exports = {
           Kompascom+ baca berita tanpa iklan: https://kmp.im/plus6
           Download aplikasi: https://kmp.im/app6`,
           img: 'hjsjd2oo87972nn2097230fb807PNG',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}

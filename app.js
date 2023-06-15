@@ -7,6 +7,7 @@ const database = require('./database/config/database.json');
 // const multer = require('./multer');
 // const cloudinary = require('cloudinary').v2;
 const session = require('express-session');
+const cors = require('cors');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -65,6 +66,15 @@ app.use(
       maxAge: 60 * 60 * 1000, //1 Jam
       // secure: true,
     },
+  })
+);
+
+app.use(
+  cors({
+    // agar frontend dapat mengirim req, cookie beserta kredensialnya
+    credentials: true,
+    // Domain yang dijikan untuk mengakases API kita
+    origin: 'http://localhost:3000',
   })
 );
 

@@ -10,6 +10,8 @@ module.exports = {
           ijazah_terakhir: 'haghdf8o72tg1p1s72620s87IJAZAHTERAKHIR',
           prestasi: '8711vs671vdibqgd625or879 9d761 997vdtvc86t27PRESTASI',
           user_id: 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}

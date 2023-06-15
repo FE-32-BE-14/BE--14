@@ -10,6 +10,8 @@ module.exports = {
           Pendonasi_id: 1,
           tujuan_id: 1,
           nominal: 500000,
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}

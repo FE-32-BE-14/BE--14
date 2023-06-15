@@ -9,6 +9,8 @@ module.exports = {
         {
           name: 'Muhammad Subhan',
           no_telp: '081278763264',
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}
