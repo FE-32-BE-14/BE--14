@@ -1,4 +1,5 @@
 const { Transaksi_Donasi, Users, Donasi, Tujuan_Donasi, Pendonasi } = require('../../database/models');
+const jwt = require('jsonwebtoken');
 
 const getTransaksiDonasi = async (req, res) => {
   try {
@@ -76,12 +77,12 @@ const getTransaksiDonasiById = async (req, res) => {
 };
 
 const createTransaksiDonasi = async (req, res) => {
-  const { donasi_id, no_va, status, user_id } = req.body;
-
+  const { donasi_id, no_va, status } = req.body;
+  const users = jwt.verify(req.headers['x-access-token'], process.env.ACCESS_TOKEN_SECRET);
   try {
     const transaksi = await Transaksi_Donasi.create({
       donasi_id: donasi_id,
-      user_id: user_id,
+      user_id: users.id,
       no_va: no_va,
       status: status,
     });
@@ -121,14 +122,13 @@ const updateTransaksiDonasi = async (req, res) => {
 
   if (!transaksiDonasi) return res.status(404).json({ msg: 'transaksiDonasi not found!' });
 
-  const { donasi_id, no_va, status, user_id } = req.body;
+  const { donasi_id, no_va, status } = req.body;
   try {
     await Transaksi_Donasi.update(
       {
         donasi_id: donasi_id,
         no_va: no_va,
         status: status,
-        user_id: user_id,
       },
       {
         where: {

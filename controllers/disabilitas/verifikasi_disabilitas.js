@@ -1,4 +1,5 @@
 const { Verifikasi_Disabilitas, Users, Kategori, Disabilitas } = require('../../database/models');
+const jwt = require('jsonwebtoken');
 
 const getVerifikasiDisabilitas = async (req, res) => {
   try {
@@ -95,11 +96,11 @@ const updateVerifikasiDisabilitas = async (req, res) => {
 };
 
 const createVerifikasiDisabilitas = async (req, res) => {
-  const { user_id, status_disabilitas, kategori_id, disabilitas_id } = req.body;
-
+  const { status_disabilitas, kategori_id, disabilitas_id } = req.body;
+  const users = jwt.verify(req.headers['x-access-token'], process.env.ACCESS_TOKEN_SECRET);
   try {
     const verifikasi = await Verifikasi_Disabilitas.create({
-      user_id: user_id,
+      user_id: users.id,
       status_disabilitas: status_disabilitas,
       kategori_id: kategori_id,
       disabilitas_id: disabilitas_id,

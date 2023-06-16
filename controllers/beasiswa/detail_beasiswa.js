@@ -1,4 +1,5 @@
 const { Detail_Beasiswa, Beasiswa, Users } = require('../../database/models');
+const jwt = require('jsonwebtoken');
 
 const getDetailBeasiswa = async (req, res) => {
   try {
@@ -84,7 +85,7 @@ const updateDetailBeasiswa = async (req, res) => {
   const { beasiswa_id, user_id } = req.body;
   try {
     await Detail_Beasiswa.update(
-      { beasiswa_id: beasiswa_id, user_id: user_id },
+      { beasiswa_id: beasiswa_id },
       {
         where: {
           id: data.id,
@@ -98,11 +99,12 @@ const updateDetailBeasiswa = async (req, res) => {
 };
 
 const createDetailBeasiswa = async (req, res) => {
-  const { user_id, beasiswa_id } = req.body;
+  const { beasiswa_id } = req.body;
+  const users = jwt.verify(req.headers['x-access-token'], process.env.ACCESS_TOKEN_SECRET);
 
   try {
     await Detail_Beasiswa.create({
-      user_id: user_id,
+      user_id: users.id,
       beasiswa_id: beasiswa_id,
     });
     res.status(201).json({ msg: 'Detail beasiswa created!' });

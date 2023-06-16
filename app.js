@@ -4,9 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const { Sequelize } = require('sequelize');
 const database = require('./database/config/database.json');
-// const multer = require('./multer');
-// const cloudinary = require('cloudinary').v2;
-const session = require('express-session');
+// const session = require('express-session');
 const cors = require('cors');
 
 const dotenv = require('dotenv');
@@ -26,12 +24,6 @@ try {
   console.error(err, 'Unable to connect database XXX');
 }
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUD_NAME,
-//   api_key: process.env.API_KEY,
-//   api_secret: process.env.API_SECRET,
-// });
-
 const indexRouter = require('./routes/index');
 const routerAlamat = require('./routes/alamat');
 const routerBeasiswa = require('./routes/beasiswa');
@@ -47,7 +39,8 @@ const routerTransaksiDonasi = require('./routes/transaksiDonasi');
 const routerDonasi = require('./routes/donasi');
 const routerIdentitas = require('./routes/identitas');
 const routerAuth = require('./routes/auth');
-// const routerMulter = require('./routes/cobaMulter');
+const routerDocBeasiswa = require('./routes/docBeasiswa');
+const routerDocDisabilitas = require('./routes/docDisabilitas');
 
 const app = express();
 
@@ -57,17 +50,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(
-  session({
-    secret: 'reandomsecret',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      maxAge: 60 * 60 * 1000, //1 Jam
-      // secure: true,
-    },
-  })
-);
+// app.use(
+//   session({
+//     secret: 'reandomsecret',
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//       maxAge: 60 * 60 * 1000, //1 Jam
+//       // secure: true,
+//     },
+//   })
+// );
 
 app.use(
   cors({
@@ -82,9 +75,11 @@ app.use('/', indexRouter);
 app.use(routerAuth);
 app.use(routerAlamat);
 app.use(routerBeasiswa);
+app.use(routerDocBeasiswa);
 app.use(routerUsers);
 app.use(routerKategori);
 app.use(routerDisabilitas);
+app.use(routerDocDisabilitas);
 app.use(routerVerifikasiDisabilitas);
 app.use(routerDetailBeasiswa);
 app.use(routerAgama);
@@ -93,6 +88,7 @@ app.use(routerPendonasi);
 app.use(routerTransaksiDonasi);
 app.use(routerDonasi);
 app.use(routerIdentitas);
+app.use('/assets', express.static('assets'));
 // app.use(routerMulter);
 
 module.exports = app;

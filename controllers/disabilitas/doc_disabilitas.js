@@ -1,9 +1,16 @@
-const doc_disabilitas = require('../../../database/models/doc_disabilitas.js');
+const { Doc_Disabilitas, Users } = require('../../database/models');
+const cloudinary = require('../../cloudinary');
+const jwt = require('jsonwebtoken');
 
-const getDoc_Disabilitas = async (req, res) => {
+const getDocDisabilitas = async (req, res) => {
   try {
-    const response = await doc_disabilitas.findAll({
-      attributes: ['id', 'email', 'password', 'refresh_token'],
+    const response = await Doc_Disabilitas.findAll({
+      attributes: ['id', 'foto', 'sk_disabilitas'],
+      include: {
+        model: Users,
+        as: 'users',
+        attributes: ['id', 'email'],
+      },
     });
 
     res.status(200).json(response);
@@ -12,34 +19,39 @@ const getDoc_Disabilitas = async (req, res) => {
   }
 };
 
-const getDoc_DisabilitasById = async (req, res) => {
+const getDocDisabilitasById = async (req, res) => {
   try {
-    const doc_disabilitas = await doc_disabilitas.findOne({
-      attributes: ['id', 'email', 'password', 'refresh_token'],
+    const data = await Doc_Disabilitas.findOne({
+      attributes: ['id', 'foto', 'sk_disabilitas'],
       where: {
         id: req.params.id,
       },
+      include: {
+        model: Users,
+        as: 'users',
+        attributes: ['id', 'email'],
+      },
     });
 
-    res.status(200).json(doc_disabilitas);
+    res.status(200).json(data);
   } catch (err) {
     res.status(400).json(err.message);
   }
 };
 
-const deleteDoc_Disabilitas = async (req, res) => {
-  const doc_disabilitas = await doc_disabilitas.findOne({
+const deleteDocDisabilitas = async (req, res) => {
+  const data = await Doc_Disabilitas.findOne({
     where: {
       id: req.params.id,
     },
   });
 
-  if (!doc_disabilitas) return res.status(404).json({ msg: 'doc_disabilitas not found!' });
+  if (!data) return res.status(404).json({ msg: 'Doc Disabilitas not found!' });
 
   try {
-    await doc_disabilitas.destroy({
+    await Doc_Disabilitas.destroy({
       where: {
-        id: doc_disabilitas.id,
+        id: data.id,
       },
     });
     res.status(200).json({ msg: 'Berhaasil dihapus!' });
@@ -48,21 +60,27 @@ const deleteDoc_Disabilitas = async (req, res) => {
   }
 };
 
-const updateDoc_Disabilitas = async (req, res) => {
-  const doc_disabilitas = await doc_disabilitas.findOne({
+const updateDocDisabilitas = async (req, res) => {
+  const data = await Doc_Disabilitas.findOne({
     where: {
       id: req.params.id,
     },
   });
 
-  if (!doc_disabilitas) return res.status(404).json({ msg: 'doc_disabilitas not found!' });
+  if (!data) return res.status(404).json({ msg: 'doc_disabilitas not found!' });
 
   try {
-    await doc_disabilitas.update(
-      { doc_disabilitas },
+    const foto = await cloudinary.uploads(file[0].path, 'images');
+    const sk_disab = await cloudinary.uploads(file[1].path, 'images');
+
+    await Doc_Disabilitas.update(
+      {
+        foto: foto.secure_url,
+        sk_disabilitas: sk_disab.secure_url,
+      },
       {
         where: {
-          id: doc_disabilitas.id,
+          id: data.id,
         },
       }
     );
@@ -72,4 +90,24 @@ const updateDoc_Disabilitas = async (req, res) => {
   }
 };
 
-module.exports = { getDoc_Disabilitas, getDoc_DisabilitasById, deleteDoc_Disabilitas, updateDoc_Disabilitas };
+const createDocDisabilitas = async (req, res) => {
+  const file = req.files;
+  try {
+    const users = jwt.verify(req.headers['x-access-token'], process.env.ACCESS_TOKEN_SECRET);
+
+    const foto = await cloudinary.uploads(file[0].path, 'images');
+    const sk_disab = await cloudinary.uploads(file[1].path, 'images');
+
+    const data = await Doc_Disabilitas.create({
+      user_id: users.id,
+      ijazah_terakhir: foto.secure_url,
+      prestasi: sk_disab.secure_url,
+    });
+
+    res.status(201).json({ msg: 'Doc created!', data: data });
+  } catch (err) {
+    res.status(400).json(err.message);
+  }
+};
+
+module.exports = { getDocDisabilitas, getDocDisabilitasById, deleteDocDisabilitas, updateDocDisabilitas, createDocDisabilitas };

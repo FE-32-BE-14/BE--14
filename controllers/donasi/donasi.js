@@ -1,4 +1,5 @@
 const { Donasi, Tujuan_Donasi, Pendonasi } = require('../../database/models');
+const jwt = require('jsonwebtoken');
 
 const getDonasi = async (req, res) => {
   try {
@@ -80,7 +81,12 @@ const updateDonasi = async (req, res) => {
   });
 
   if (!donasi) return res.status(404).json({ msg: 'donasi not found!' });
+
   const { pendonasi_id, tujuan_id, nominal } = req.body;
+
+  const users = jwt.verify(req.headers['x-access-token'], process.env.ACCESS_TOKEN_SECRET);
+
+  const VA = Math.floor(Math.random() * 100000000000) + users.id;
   try {
     await Donasi.update(
       {
@@ -94,13 +100,16 @@ const updateDonasi = async (req, res) => {
         },
       }
     );
-    res.status(200).json({ msg: 'donasi updated!' });
+    res.status(200).json({ no_va: VA, msg: 'donasi updated!' });
   } catch (err) {
     res.status(400).json(err.message);
   }
 };
 
 const createDonasi = async (req, res) => {
+  const users = jwt.verify(req.headers['x-access-token'], process.env.ACCESS_TOKEN_SECRET);
+  const VA = Math.floor(Math.random() * 100000000000) + users.id;
+
   const { pendonasi_id, tujuan_id, nominal } = req.body;
 
   try {
@@ -109,7 +118,7 @@ const createDonasi = async (req, res) => {
       tujuan_id: tujuan_id,
       nominal: nominal,
     });
-    res.status(201).json({ donasi: donasi, msg: ' Donasi created!' });
+    res.status(201).json({ donasi: donasi, no_va: VA, msg: ' Donasi created!' });
   } catch (error) {
     res.status(400).json({ msg: error.message });
   }

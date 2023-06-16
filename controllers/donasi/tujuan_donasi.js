@@ -1,4 +1,5 @@
 const { Tujuan_Donasi } = require('../../database/models');
+const cloudinary = require('../../cloudinary');
 
 const getTujuandonasi = async (req, res) => {
   try {
@@ -55,15 +56,17 @@ const updateTujuanDonasi = async (req, res) => {
     },
   });
 
-  const { name, deskripsi, img } = req.body;
   if (!tujuandonasi) return res.status(404).json({ msg: 'tujuandonasi not found!' });
+  const { name, deskripsi } = req.body;
+  const file = req.file;
 
   try {
+    const img = await cloudinary.uploads(file.path, 'img');
     await Tujuan_Donasi.update(
       {
         name: name,
         deskripsi: deskripsi,
-        img: img,
+        img: img.secure_url,
       },
       {
         where: {
@@ -78,13 +81,16 @@ const updateTujuanDonasi = async (req, res) => {
 };
 
 const createTujuanDonasi = async (req, res) => {
-  const { name, deskripsi, img } = req.body;
+  const { name, deskripsi } = req.body;
+  const file = req.file;
 
   try {
+    const img = await cloudinary.uploads(file.path, 'img');
+
     const tujuanDonasi = await Tujuan_Donasi.create({
       name: name,
       deskripsi: deskripsi,
-      img: img,
+      img: img.secure_url,
     });
     res.status(201).json({ tujuanDonasi: tujuanDonasi, msg: 'Tujuan Donasi created!' });
   } catch (error) {

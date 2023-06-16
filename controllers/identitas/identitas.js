@@ -1,4 +1,5 @@
 const { Identitas, Agama, Users } = require('../../database/models');
+const jwt = require('jsonwebtoken');
 
 const getIdentitas = async (req, res) => {
   try {
@@ -26,7 +27,19 @@ const getIdentitas = async (req, res) => {
 const getIdentitasById = async (req, res) => {
   try {
     const data = await Identitas.findOne({
-      attributes: ['id', 'user_id', 'name_lengkap', 'tempat_lhr', 'tanggal_lhr', 'jenis_kelamin', 'no_nik', 'no_kk', 'agama_id', 'provinsi', 'kabupaten', 'kecamatan', 'desa'],
+      attributes: ['id', 'name_lengkap', 'tempat_lhr', 'tanggal_lhr', 'jenis_kelamin', 'no_nik', 'no_kk', 'provinsi', 'kabupaten', 'kecamatan', 'desa'],
+      include: [
+        {
+          model: Users,
+          as: 'users',
+          attributes: ['id', 'email'],
+        },
+        {
+          model: Agama,
+          as: 'agama',
+          attributes: ['id', 'name'],
+        },
+      ],
       where: {
         id: req.params.id,
       },
@@ -67,11 +80,15 @@ const updateIdentitas = async (req, res) => {
   });
 
   if (!data) return res.status(404).json({ msg: 'Identitas not found!' });
-  const { user_id, name_lengkap, tempat_lhr, tanggal_lhr, jenis_kelamin, no_nik, no_kk, agama_id, provinsi, kabupaten, kecamatan, desa } = req.body;
+
+  const { name_lengkap, tempat_lhr, tanggal_lhr, jenis_kelamin, no_nik, no_kk, agama_id, provinsi, kabupaten, kecamatan, desa } = req.body;
+
+  const users = jwt.verify(req.headers['x-access-token'], process.env.ACCESS_TOKEN_SECRET);
+
   try {
     await Identitas.update(
       {
-        user_id: user_id,
+        user_id: users.id,
         name_lengkap: name_lengkap,
         tempat_lhr: tempat_lhr,
         tanggal_lhr: tanggal_lhr,
@@ -97,10 +114,13 @@ const updateIdentitas = async (req, res) => {
 };
 
 const createIdentitas = async (req, res) => {
-  const { user_id, name_lengkap, tempat_lhr, tanggal_lhr, jenis_kelamin, no_nik, no_kk, agama_id, provinsi, kabupaten, kecamatan, desa } = req.body;
+  const { name_lengkap, tempat_lhr, tanggal_lhr, jenis_kelamin, no_nik, no_kk, agama_id, provinsi, kabupaten, kecamatan, desa } = req.body;
+
+  const users = jwt.verify(req.headers['x-access-token'], process.env.ACCESS_TOKEN_SECRET);
+
   try {
     const identitas = await Identitas.create({
-      user_id: user_id,
+      user_id: users.id,
       name_lengkap: name_lengkap,
       tempat_lhr: tempat_lhr,
       tanggal_lhr: tanggal_lhr,
