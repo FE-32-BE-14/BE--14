@@ -16,10 +16,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // /* GET home page. */
-router.get('/docbeasiswa', verifyUser, getDocDisabilitas);
-router.get('/docbeasiswa/:id', verifyUser, getDocDisabilitasById);
-router.post('/docbeasiswa/', verifyUser, adminOnly, upload.array('images'), createDocDisabilitas);
-router.patch('/docbeasiswa/:id', verifyUser, adminOnly, upload.array('images'), updateDocDisabilitas);
-router.delete('/docbeasiswa/:id', verifyUser, adminOnly, deleteDocDisabilitas);
+router.get('/docdisabilitas', verifyUser, getDocDisabilitas);
+router.get('/docdisabilitas/:id', verifyUser, getDocDisabilitasById);
+router.post('/docdisabilitas/', verifyUser, adminOnly, upload.array('images'), createDocDisabilitas);
+router.patch('/docdisabilitas/:id', verifyUser, adminOnly, upload.array('images'), updateDocDisabilitas);
+router.delete('/docdisabilitas/:id', verifyUser, adminOnly, deleteDocDisabilitas);
 
 module.exports = router;
