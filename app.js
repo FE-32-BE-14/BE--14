@@ -44,6 +44,15 @@ const routerDocDisabilitas = require('./routes/docDisabilitas');
 
 const app = express();
 
+app.use(
+  cors({
+    // agar frontend dapat mengirim req, cookie beserta kredensialnya
+    credentials: true,
+    // Domain yang dijikan untuk mengakases API kita
+    origin: 'http://localhost:3000',
+  })
+);
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -61,15 +70,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //     },
 //   })
 // );
-
-app.use(
-  cors({
-    // agar frontend dapat mengirim req, cookie beserta kredensialnya
-    credentials: true,
-    // Domain yang dijikan untuk mengakases API kita
-    origin: 'http://localhost:3000',
-  })
-);
 
 app.use('/', indexRouter);
 app.use(routerAuth);
