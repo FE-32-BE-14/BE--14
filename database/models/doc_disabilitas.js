@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Doc_Disabilitas.belongsTo(models.Users, {
-      //   as: 'Users',
-      //   foreignKey: 'user_id',
-      //   onDelete: 'CASCADE',
-      //   onUpdate: 'CASCADE',
-      // });
+      Doc_Disabilitas.belongsTo(models.Users, {
+        as: 'users',
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
     }
   }
   Doc_Disabilitas.init(
