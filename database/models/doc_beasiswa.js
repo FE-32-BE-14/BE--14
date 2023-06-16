@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // Doc_Beasiswa.belongsTo(models.Users, {
-      //   as: 'User',
-      //   foreignKey: 'user_id',
-      //   onDelete: 'CASCADE',
-      //   onUpdate: 'CASCADE',
-      // });
+      Doc_Beasiswa.belongsTo(models.Users, {
+        as: 'users',
+        foreignKey: 'user_id',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      });
     }
   }
   Doc_Beasiswa.init(
