@@ -100,8 +100,8 @@ const createDocDisabilitas = async (req, res) => {
 
     const data = await Doc_Disabilitas.create({
       user_id: users.id,
-      ijazah_terakhir: foto.secure_url,
-      prestasi: sk_disab.secure_url,
+      sk_disabilitas: foto.secure_url,
+      foto: sk_disab.secure_url,
     });
 
     res.status(201).json({ msg: 'Doc created!', data: data });
