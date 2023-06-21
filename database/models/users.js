@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
-      refresh_token: DataTypes.TEXT,
+      verifikasi_email: DataTypes.BOOLEAN,
     },
     {
       sequelize,

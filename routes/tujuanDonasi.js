@@ -19,8 +19,8 @@ const upload = multer({ storage: storage });
 // console.log(upload);
 
 /* GET home page. */
-router.get('/tujuandonasi', verifyUser, getTujuandonasi);
-router.post('/tujuandonasi', verifyUser, adminOnly, upload.single('img'), createTujuanDonasi);
+router.get('/tujuandonasi', getTujuandonasi);
+router.post('/tujuandonasi', adminOnly, upload.single('img'), createTujuanDonasi);
 router.get('/tujuandonasi/:id', verifyUser, getTujuanDonasiById);
 router.patch('/tujuandonasi/:id', verifyUser, adminOnly, upload.single('img'), updateTujuanDonasi);
 router.delete('/tujuandonasi/:id', verifyUser, adminOnly, deleteTujuanDonasi);

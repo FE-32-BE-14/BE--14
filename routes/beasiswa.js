@@ -20,8 +20,8 @@ const upload = multer({ storage: storage });
 // console.log(upload);
 
 /* GET home page. */
-router.get('/beasiswa', verifyUser, getBeasiswa);
-router.get('/beasiswa/:id', verifyUser, getBeasiswaById);
+router.get('/beasiswa', getBeasiswa);
+router.get('/beasiswa/:id', getBeasiswaById);
 // router.post('/beasiswa/', verifyUser, adminOnly, upload.single('img'), createBeasiswa);
 router.post('/beasiswa/', verifyUser, adminOnly, upload.single('img'), createBeasiswa);
 router.patch('/beasiswa/:id', verifyUser, adminOnly, upload.single('img'), updatebeasiswa);
