@@ -49,7 +49,7 @@ app.use(
     // agar frontend dapat mengirim req, cookie beserta kredensialnya
     credentials: true,
     // Domain yang dijikan untuk mengakases API kita
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000', 'http://fe32-ayo.netlify.app'],
   })
 );
 
